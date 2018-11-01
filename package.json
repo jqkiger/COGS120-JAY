@@ -1,6 +1,7 @@
 {
-  "name": "create-react-app",
-  "version": "3.2.2",
+  "name": "Splitmo",
+  "version": "0.0.2",
+  "homepage": "https://jqkiger.github.io/COGS120-JAY/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "latest",
