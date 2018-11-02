@@ -18,9 +18,9 @@ const theme = createMuiTheme({
     secondary: {
       light: lightGreen[300],
       main: lightGreen[500],
-      dark: red[500],
+      dark: lightGreen[500],
     },
-    red: {
+    error: {
       light: red[300],
       main: red[500],
       dark: red[700],

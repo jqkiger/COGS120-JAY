@@ -72,11 +72,11 @@ class Index extends React.Component {
   };
 
   handleCancel = () => {
-    this.props.onClose(this.props.value);
+    this.setState({open:false, pageTwoOpen:false, confirmationOpen:false});
   };
 
   handleOk = () => {
-    this.props.onClose(this.state.value);
+    this.setState({open: false, pageTwoOpen: true});
   };
 
   handleChange = (event, value) => {
@@ -107,16 +107,54 @@ class Index extends React.Component {
     this.setState({remindOpen: false,});
   };
 
+  handleConfirmation=()=>{
+    this.setState({confirmationOpen: true, pageTwoOpen:false})
+  };
+
+  handleCloseConfirmation = () => {
+    this.setState({confirmationOpen: false,});
+  };
+
   render() {
     const { value, ...other } = this.props;
     const { classes } = this.props;
-    const { open } = this.state;
-    const {descriptionOpen} = this.state;
-    const {payOpen} = this.state;
-    const {remindOpen} =this.state;
-
+    const { open, descriptionOpen, payOpen, remindOpen, pageTwoOpen, confirmationOpen } = this.state;
+    
     return (
       <div>
+
+          <Dialog
+                  open={this.state.pageTwoOpen}
+                  onClose={this.handleCancel}
+                  aria-labelledby="add-people-dialog"
+                >
+                  <DialogTitle id="add-people-dialog">Add people to split activity Page</DialogTitle>
+                  <DialogActions>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleConfirmation} color="primary">
+                      Next
+                    </Button>
+                  </DialogActions>
+          </Dialog>
+
+          <Dialog
+                  open={this.state.confirmationOpen}
+                  onClose={this.handleCancel}
+                  aria-labelledby="confirmation-dialog"
+                >
+                  <DialogTitle id="confirmation-dialog">Confirmation split activity Page</DialogTitle>
+                  <DialogActions>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Confirm
+                    </Button>
+                  </DialogActions>
+          </Dialog>
+
           <Dialog
                   open={this.state.descriptionOpen}
                   onClose={this.handleCloseDescription}
@@ -137,7 +175,7 @@ class Index extends React.Component {
                   onClose={this.handleCloseRemind}
                   aria-labelledby="remind-dialog"
                 >
-                  <DialogTitle id="remind-dialog">Remind Methods Page</DialogTitle>
+                  <DialogTitle id="remind-dialog">Methods to remind Page</DialogTitle>
           </Dialog>
 
           <div className={classes.top}>
@@ -224,7 +262,7 @@ class Index extends React.Component {
                 <Button onClick={this.handleClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={this.handleOk} color="primary">
                   Next
                 </Button>
               </DialogActions>
