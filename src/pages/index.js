@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -84,20 +83,77 @@ class Index extends React.Component {
     this.setState({ value });
   };
 
+  handleClickDescription = () => {
+    this.setState({descriptionOpen: true,});
+  };
+
+  handleCloseDescription = () =>{
+    this.setState({descriptionOpen: false,});
+  };
+
+  handleClickPay = () => {
+    this.setState({payOpen: true,});
+  };
+
+  handleClosePay = () => {
+    this.setState({payOpen: false,});
+  };
+
+  handleClickRemind = () => {
+    this.setState({remindOpen: true,});
+  };
+
+  handleCloseRemind = () => {
+    this.setState({remindOpen: false,});
+  };
+
   render() {
     const { value, ...other } = this.props;
     const { classes } = this.props;
     const { open } = this.state;
+    const {descriptionOpen} = this.state;
+    const {payOpen} = this.state;
+    const {remindOpen} =this.state;
 
     return (
       <div>
+          <Dialog
+                  open={this.state.descriptionOpen}
+                  onClose={this.handleCloseDescription}
+                  aria-labelledby="description-dialog"
+                >
+                  <DialogTitle id="description-dialog">Split Activity Description Page</DialogTitle>
+          </Dialog>
+          <Dialog
+                  open={this.state.payOpen}
+                  onClose={this.handleClosePay}
+                  aria-labelledby="pay-dialog"
+                >
+                  <DialogTitle id="pay-dialog">Payment Confirmation Page</DialogTitle>
+          </Dialog>
+
+          <Dialog
+                  open={this.state.remindOpen}
+                  onClose={this.handleCloseRemind}
+                  aria-labelledby="remind-dialog"
+                >
+                  <DialogTitle id="remind-dialog">Remind Methods Page</DialogTitle>
+          </Dialog>
+
           <div className={classes.top}>
           <AppBar/>
           <List>
           {[0, 1, 2, 3, 4, 5, 6].map(value => (
-            <ListItem key={value} dense button>
+            <ListItem key={value} dense button onClick={() => this.handleClickDescription()}>
               <Avatar alt="Remy Sharp" src="http://multisim-insigneo.org/wp-content/uploads/2015/02/blank-profile-picture-300x300.png" />
               <ListItemText primary={`Split Activity ${value + 1}`} />
+              <ListItemSecondaryAction>
+                <Button variant="contained" color ={value %4 ===0 ? 'error':'secondary'} aria-label="pay" 
+                onClick={() => (value %4 ===0 ? this.handleClickRemind():this.handleClickPay())}>
+                {value %4 ===0 ? 'Remind':'Pay'}
+                </Button>
+              </ListItemSecondaryAction>
+
             </ListItem>
           ))}
         </List>
