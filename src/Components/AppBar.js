@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,10 +13,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Group from '@material-ui/icons/Group';
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -46,18 +49,26 @@ class ButtonAppBar extends React.Component {
     });
   };
 
+  handleFriendsClick = () => {
+    
+  };
+
   render(){
     const{classes} = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          {['Profile', 'Friends'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 ===0 ? <AccountCircle/>:<Group/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={() => this.handleFriendsClick()}>
+            <ListItemIcon><AccountCircle/></ListItemIcon>
+            <ListItemText primary="Profile"/>
+          </ListItem>
+
+          <ListItem button >
+            <ListItemIcon><Group/></ListItemIcon>
+            <ListItemText primary="Friends"/>
+          </ListItem>
+          
         </List>
       </div>
     );
