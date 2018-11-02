@@ -12,10 +12,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -56,36 +52,18 @@ class ButtonAppBar extends React.Component {
     
   };
 
-    handleClickProfile=()=>{
-      this.setState({profileOpen: true,});
-    };
-    
-    handleClickFriends=()=>{
-      this.setState({friendsOpen: true,});
-    };
-
-    handleCloseProfile=()=>{
-      this.setState({profileOpen: false,});
-    };
-
-    handleCloseFriends=()=>{
-      this.setState({friendsOpen: false,});
-    };
-
   render(){
     const{classes} = this.props;
-    const{profileOpen} = this.state;
-    const{friendsOpen} = this.state;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          <ListItem button onClick={() => this.handleClickProfile()}>
+          <ListItem button onClick={() => this.handleFriendsClick()}>
             <ListItemIcon><AccountCircle/></ListItemIcon>
             <ListItemText primary="Profile"/>
           </ListItem>
 
-          <ListItem button onClick={() => this.handleClickFriends()}>
+          <ListItem button >
             <ListItemIcon><Group/></ListItemIcon>
             <ListItemText primary="Friends"/>
           </ListItem>
@@ -112,7 +90,6 @@ class ButtonAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-
             <Button 
               className={classes.menuButton} 
               color="inherit" 
@@ -121,7 +98,6 @@ class ButtonAppBar extends React.Component {
               >
               <MenuIcon />
             </Button>
-
             <Drawer anchor="left" open={this.state.left} onClose={this.toggleDrawer('left', false)}>
               <div
                 tabIndex={0}
@@ -132,24 +108,6 @@ class ButtonAppBar extends React.Component {
                 {sideList}
               </div>
             </Drawer>
-
-            <div>
-              <Dialog
-                      open={this.state.profileOpen}
-                      onClose={this.handleCloseProfile}
-                      aria-labelledby="profile-dialog"
-                    >
-                      <DialogTitle id="profile-dialog">Profile Page</DialogTitle>
-              </Dialog>
-              <Dialog
-                      open={this.state.friendsOpen}
-                      onClose={this.handleCloseFriends}
-                      aria-labelledby="friend-dialog"
-                    >
-                      <DialogTitle id="friend-dialog">Friend/Social Page</DialogTitle>
-              </Dialog>
-            </div>
-
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Splitmo
             </Typography>
