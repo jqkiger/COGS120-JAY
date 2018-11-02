@@ -72,31 +72,126 @@ class Index extends React.Component {
   };
 
   handleCancel = () => {
-    this.props.onClose(this.props.value);
+    this.setState({open:false, pageTwoOpen:false, confirmationOpen:false});
   };
 
   handleOk = () => {
-    this.props.onClose(this.state.value);
+    this.setState({open: false, pageTwoOpen: true});
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
+  handleClickDescription = () => {
+    this.setState({descriptionOpen: true,});
+  };
+
+  handleCloseDescription = () =>{
+    this.setState({descriptionOpen: false,});
+  };
+
+  handleClickPay = () => {
+    this.setState({payOpen: true,});
+  };
+
+  handleClosePay = () => {
+    this.setState({payOpen: false,});
+  };
+
+  handleClickRemind = () => {
+    this.setState({remindOpen: true,});
+  };
+
+  handleCloseRemind = () => {
+    this.setState({remindOpen: false,});
+  };
+
+  handleConfirmation=()=>{
+    this.setState({confirmationOpen: true, pageTwoOpen:false})
+  };
+
+  handleCloseConfirmation = () => {
+    this.setState({confirmationOpen: false,});
+  };
+
   render() {
     const { value, ...other } = this.props;
     const { classes } = this.props;
-    const { open } = this.state;
-
+    const { open, descriptionOpen, payOpen, remindOpen, pageTwoOpen, confirmationOpen } = this.state;
+    
     return (
       <div>
+
+          <Dialog
+                  open={this.state.pageTwoOpen}
+                  onClose={this.handleCancel}
+                  aria-labelledby="add-people-dialog"
+                >
+                  <DialogTitle id="add-people-dialog">Add people to split activity Page</DialogTitle>
+                  <DialogActions>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleConfirmation} color="primary">
+                      Next
+                    </Button>
+                  </DialogActions>
+          </Dialog>
+
+          <Dialog
+                  open={this.state.confirmationOpen}
+                  onClose={this.handleCancel}
+                  aria-labelledby="confirmation-dialog"
+                >
+                  <DialogTitle id="confirmation-dialog">Confirmation split activity Page</DialogTitle>
+                  <DialogActions>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleCancel} color="primary">
+                      Confirm
+                    </Button>
+                  </DialogActions>
+          </Dialog>
+
+          <Dialog
+                  open={this.state.descriptionOpen}
+                  onClose={this.handleCloseDescription}
+                  aria-labelledby="description-dialog"
+                >
+                  <DialogTitle id="description-dialog">Split Activity Description Page</DialogTitle>
+          </Dialog>
+          <Dialog
+                  open={this.state.payOpen}
+                  onClose={this.handleClosePay}
+                  aria-labelledby="pay-dialog"
+                >
+                  <DialogTitle id="pay-dialog">Payment Confirmation Page</DialogTitle>
+          </Dialog>
+
+          <Dialog
+                  open={this.state.remindOpen}
+                  onClose={this.handleCloseRemind}
+                  aria-labelledby="remind-dialog"
+                >
+                  <DialogTitle id="remind-dialog">Methods to remind Page</DialogTitle>
+          </Dialog>
+
           <div className={classes.top}>
           <AppBar/>
           <List>
           {[0, 1, 2, 3, 4, 5, 6].map(value => (
-            <ListItem key={value} dense button>
+            <ListItem key={value} dense button onClick={() => this.handleClickDescription()}>
               <Avatar alt="Remy Sharp" src="http://multisim-insigneo.org/wp-content/uploads/2015/02/blank-profile-picture-300x300.png" />
               <ListItemText primary={`Split Activity ${value + 1}`} />
+              <ListItemSecondaryAction>
+                <Button variant="contained" color ={value %4 ===0 ? 'error':'secondary'} aria-label="pay" 
+                onClick={() => (value %4 ===0 ? this.handleClickRemind():this.handleClickPay())}>
+                {value %4 ===0 ? 'Remind':'Pay'}
+                </Button>
+              </ListItemSecondaryAction>
+
             </ListItem>
           ))}
         </List>
@@ -167,7 +262,7 @@ class Index extends React.Component {
                 <Button onClick={this.handleClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={this.handleOk} color="primary">
                   Next
                 </Button>
               </DialogActions>
